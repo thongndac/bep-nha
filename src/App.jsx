@@ -6,7 +6,16 @@ function App() {
   const [activeTab, setActiveTab] = useState('generator') // generator | weekly | shopping | manage
   const [dishes, setDishes] = useState(() => {
     const saved = localStorage.getItem('menuAppDishes')
-    if (saved) return JSON.parse(saved)
+    if (saved) {
+      const savedDishes = JSON.parse(saved)
+      // Merge ingredients from initialDishes into saved data
+      const ingredientMap = {}
+      initialDishes.forEach(d => { ingredientMap[d.id] = d.ingredients })
+      return savedDishes.map(d => ({
+        ...d,
+        ingredients: d.ingredients || ingredientMap[d.id] || []
+      }))
+    }
     return initialDishes
   })
 
