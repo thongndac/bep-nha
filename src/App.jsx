@@ -436,7 +436,21 @@ function ShoppingList({ weeklyMenu }) {
     }
   })
 
-  // Group by category
+  // Gia vi - skip these (always available at home)
+  const giaViKeywords = [
+    'tỏi', 'tiêu', 'sả', 'gừng', 'ớt', 'nghệ', 'quế', 'hoa hồi',
+    'ngũ vị', 'mật ong', 'đường', 'nước mắm', 'dầu hào',
+    'dầu ăn', 'bơ', 'giấm', 'me', 'tương', 'nước dừa', 'nước cốt dừa',
+    'phô mai', 'hành tím', 'hành lá', 'hành phi', 'rau mùi', 'rau om',
+    'rau răm', 'rau ngò', 'cần tây', 'mỡ hành', 'nước mắm chua ngọt'
+  ]
+
+  const isGiaVi = (name) => {
+    const lower = name.toLowerCase()
+    return giaViKeywords.some(kw => lower.includes(kw))
+  }
+
+  // Group by category (without gia vi)
   const categories = {
     '🥩 Thịt & Cá & Hải sản': [
       'thịt', 'bò', 'heo', 'gà', 'vịt', 'ếch', 'cá', 'mực', 'tôm', 'lươn',
@@ -448,17 +462,11 @@ function ShoppingList({ weeklyMenu }) {
       'bạc hà', 'thơm', 'đu đủ', 'bắp ngô', 'xà lách', 'đậu bắp',
       'củ cải', 'chanh'
     ],
-    '🧄 Gia vị & Nước chấm': [
-      'tỏi', 'tiêu', 'sả', 'gừng', 'ớt', 'nghệ', 'quế', 'hoa hồi',
-      'ngũ vị', 'cà ri', 'mật ong', 'đường', 'nước mắm', 'dầu hào',
-      'dầu ăn', 'bơ', 'giấm', 'me', 'tương', 'nước dừa', 'nước cốt dừa',
-      'phô mai', 'hành tím', 'hành lá', 'hành phi', 'rau mùi', 'rau om',
-      'rau răm', 'rau ngò', 'cần tây', 'mỡ hành', 'nước mắm chua ngọt'
-    ],
     '🍜 Đồ khô & Khác': [
       'bún', 'hủ tíu', 'mì', 'nui', 'bánh', 'miến', 'gạo',
       'trứng', 'đậu hủ', 'đậu phộng', 'nấm', 'tôm khô', 'táo đỏ',
-      'kỷ tử', 'bột', 'vỏ hoành', 'đồ chua', 'spaghetti', 'rau sống'
+      'kỷ tử', 'bột', 'vỏ hoành', 'đồ chua', 'spaghetti', 'rau sống',
+      'đồ tiềm'
     ]
   }
 
@@ -470,9 +478,10 @@ function ShoppingList({ weeklyMenu }) {
     return '📦 Khác'
   }
 
-  // Build grouped list
+  // Build grouped list, skip gia vi
   const grouped = {}
   Object.values(ingredientMap).forEach(item => {
+    if (isGiaVi(item.name)) return // skip gia vi
     const cat = categorize(item.name)
     if (!grouped[cat]) grouped[cat] = []
     grouped[cat].push(item)

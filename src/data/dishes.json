@@ -1,5 +1,5 @@
 [
-  {"id": 1, "name": "Bò kho", "type": "MAN", "ingredients": ["Thịt bò", "Cà rốt", "Khoai tây", "Sả", "Gừng", "Quế", "Hoa hồi", "Nước dừa", "Hành tím"]},
+  {"id": 1, "name": "Bò kho", "type": "MAN", "ingredients": ["Thịt bò", "Cà rốt", "Khoai tây", "Bột nấu bò kho", "Sả", "Gừng", "Hành tím"]},
   {"id": 2, "name": "Bò xào khoai tây", "type": "MAN", "ingredients": ["Thịt bò", "Khoai tây", "Hành tây", "Tỏi", "Tiêu", "Dầu hào"]},
   {"id": 3, "name": "Bò nhúng giấm", "type": "MAN", "ingredients": ["Thịt bò", "Giấm", "Sả", "Rau sống", "Bún", "Đồ chua", "Đậu phộng"]},
   {"id": 4, "name": "Thịt bò xào", "type": "MAN", "ingredients": ["Thịt bò", "Hành tây", "Ớt chuông", "Tỏi", "Dầu hào", "Tiêu"]},
@@ -16,7 +16,7 @@
   {"id": 15, "name": "Đùi gà nướng", "type": "MAN", "ingredients": ["Đùi gà", "Mật ong", "Tỏi", "Tiêu", "Dầu ăn", "Rau sống"]},
   {"id": 16, "name": "Cơm gà Hội An", "type": "MAN", "ingredients": ["Gà ta", "Gạo", "Nghệ", "Hành lá", "Rau sống", "Ớt"]},
   {"id": 17, "name": "Gà kho sả", "type": "MAN", "ingredients": ["Thịt gà", "Sả", "Nước mắm", "Đường", "Tỏi", "Ớt"]},
-  {"id": 18, "name": "Cà ri vịt", "type": "MAN", "ingredients": ["Thịt vịt", "Bột cà ri", "Nước cốt dừa", "Khoai tây", "Cà rốt", "Sả", "Hành tây"]},
+  {"id": 18, "name": "Cà ri vịt", "type": "MAN", "ingredients": ["Thịt vịt", "Bột nấu cà ri", "Nước cốt dừa", "Khoai tây", "Cà rốt", "Hành tây"]},
   {"id": 19, "name": "Vịt khìa", "type": "MAN", "ingredients": ["Thịt vịt", "Nước dừa", "Ngũ vị hương", "Tỏi", "Nước mắm", "Đường"]},
   {"id": 20, "name": "Vịt kho sả", "type": "MAN", "ingredients": ["Thịt vịt", "Sả", "Nước mắm", "Đường", "Tỏi", "Gừng"]},
   {"id": 21, "name": "Cá lóc chiên sả", "type": "MAN", "ingredients": ["Cá lóc", "Sả", "Bột chiên giòn", "Tỏi", "Nước mắm"]},
@@ -70,5 +70,7 @@
   {"id": 66, "name": "Bún gạo xào tôm", "type": "NUOC", "ingredients": ["Bún gạo", "Tôm", "Giá đỗ", "Hành lá", "Trứng", "Tỏi"]},
   {"id": 67, "name": "Bún thịt xào", "type": "NUOC", "ingredients": ["Bún", "Thịt heo", "Rau sống", "Đồ chua", "Đậu phộng", "Nước mắm chua ngọt"]},
   {"id": 68, "name": "Hoành thánh", "type": "NUOC", "ingredients": ["Vỏ hoành thánh", "Thịt heo xay", "Tôm", "Hành lá", "Xương heo", "Cải thìa"]},
-  {"id": 69, "name": "Mì gà", "type": "NUOC", "ingredients": ["Mì trứng", "Thịt gà", "Xương gà", "Hành lá", "Cải ngọt", "Hành phi"]}
+  {"id": 69, "name": "Mì gà", "type": "NUOC", "ingredients": ["Mì trứng", "Thịt gà", "Xương gà", "Hành lá", "Cải ngọt", "Hành phi"]},
+
+  {"id": 70, "name": "Gà ác tiềm thuốc bắc", "type": "CANH", "ingredients": ["Gà ác", "Đồ tiềm thuốc bắc", "Táo đỏ", "Kỷ tử"]}
 ]
