@@ -130,6 +130,38 @@ function App() {
     setWeeklyMenu(newWeek)
   }
 
+  // Swap a single dish in weekly menu
+  const swapWeeklyDish = (dayIdx, meal, type) => {
+    setWeeklyMenu(prev => {
+      const updated = [...prev]
+      const day = { ...updated[dayIdx] }
+
+      // Collect all IDs currently in weekly menu to avoid duplicates
+      const usedIds = []
+      prev.forEach(d => {
+        if (d.trua.MAN) usedIds.push(d.trua.MAN.id)
+        if (d.trua.CANH) usedIds.push(d.trua.CANH.id)
+        if (d.trua.RAU) usedIds.push(d.trua.RAU.id)
+        if (d.chieu.MAN) usedIds.push(d.chieu.MAN.id)
+        if (d.chieu.NUOC) usedIds.push(d.chieu.NUOC.id)
+      })
+
+      const newDish = getRandomDishNotInHistory(type, usedIds)
+
+      if (meal === 'trua') {
+        day.trua = { ...day.trua, [type]: newDish }
+      } else {
+        if (type === 'NUOC') {
+          day.chieu = { ...day.chieu, NUOC: newDish }
+        } else {
+          day.chieu = { ...day.chieu, MAN: newDish }
+        }
+      }
+      updated[dayIdx] = day
+      return updated
+    })
+  }
+
   return (
     <div className="app-container">
       <header>
@@ -224,6 +256,7 @@ function App() {
       {activeTab === 'weekly' && (
         <div className="glass-card">
           <h2 style={{marginTop: 0, textAlign: 'center'}}>Thực đơn cả tuần</h2>
+          <p style={{textAlign: 'center', color: '#999', fontSize: '13px', marginTop: 0}}>Bấm 🔄 để đổi từng món</p>
           
           <div className="weekly-scroll">
             {weeklyMenu.map((day, idx) => (
@@ -234,31 +267,45 @@ function App() {
                 </h3>
 
                 {/* Trua */}
-                <div className="weekly-bua">
-                  <span className="weekly-bua-label">Trưa</span>
+                <div className="weekly-bua-label">☀️ Trưa</div>
+                <div className="weekly-dish-row">
                   <span className="weekly-dish">🥩 {day.trua.MAN?.name || "—"}</span>
-                  <span className="weekly-sep">·</span>
+                  <button className="swap-btn" onClick={() => swapWeeklyDish(idx, 'trua', 'MAN')}>🔄</button>
+                </div>
+                <div className="weekly-dish-row">
                   <span className="weekly-dish">🥗 {day.trua.RAU?.name || "—"}</span>
-                  <span className="weekly-sep">·</span>
+                  <button className="swap-btn" onClick={() => swapWeeklyDish(idx, 'trua', 'RAU')}>🔄</button>
+                </div>
+                <div className="weekly-dish-row">
                   <span className="weekly-dish">🥣 {day.trua.CANH?.name || "—"}</span>
+                  <button className="swap-btn" onClick={() => swapWeeklyDish(idx, 'trua', 'CANH')}>🔄</button>
                 </div>
 
                 {/* Chieu */}
-                <div className="weekly-bua">
-                  <span className="weekly-bua-label">Chiều</span>
-                  {day.chieu.isNuoc ? (
+                <div className="weekly-bua-label" style={{marginTop: '6px'}}>🌙 Chiều</div>
+                {day.chieu.isNuoc ? (
+                  <div className="weekly-dish-row">
                     <span className="weekly-dish nuoc-text">🍜 {day.chieu.NUOC?.name || "—"}</span>
-                  ) : (
+                    <button className="swap-btn" onClick={() => swapWeeklyDish(idx, 'chieu', 'NUOC')}>🔄</button>
+                  </div>
+                ) : (
+                  <div className="weekly-dish-row">
                     <span className="weekly-dish">🥩 {day.chieu.MAN?.name || "—"}</span>
-                  )}
-                </div>
+                    <button className="swap-btn" onClick={() => swapWeeklyDish(idx, 'chieu', 'MAN')}>🔄</button>
+                  </div>
+                )}
               </div>
             ))}
           </div>
 
-          <button className="btn" onClick={generateWeeklyMenu} style={{marginTop: '15px'}}>
-            🎲 Đổi Mới Tuần Này
-          </button>
+          <div style={{display: 'flex', gap: '10px', marginTop: '15px'}}>
+            <button className="btn btn-secondary" onClick={generateWeeklyMenu} style={{flex: 1}}>
+              🎲 Đổi Cả Tuần
+            </button>
+            <button className="btn" onClick={() => setActiveTab('shopping')} style={{flex: 1}}>
+              ✅ Chốt → Đi Chợ
+            </button>
+          </div>
         </div>
       )}
 

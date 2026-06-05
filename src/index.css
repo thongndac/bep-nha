@@ -245,28 +245,43 @@ header h1 {
   border: 1px solid #ffe0b2;
 }
 
-.weekly-bua {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 0;
-  font-size: 13px;
-}
-
 .weekly-bua-label {
   font-weight: 600;
   color: #999;
   font-size: 12px;
-  min-width: 38px;
+  padding: 4px 0 2px;
+}
+
+.weekly-dish-row {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.weekly-dish-row:hover {
+  background: rgba(0,0,0,0.02);
 }
 
 .weekly-dish {
+  flex-grow: 1;
   color: #444;
+  font-size: 13px;
 }
 
-.weekly-sep {
-  color: #ddd;
+.swap-btn {
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  opacity: 0.25;
+  transition: opacity 0.2s;
+  padding: 2px 4px;
+}
+
+.swap-btn:hover {
+  opacity: 1;
 }
 
 .nuoc-text {
