@@ -3,7 +3,7 @@ import initialDishes from './data/dishes.json'
 import './index.css'
 
 function App() {
-  const [activeTab, setActiveTab] = useState('generator') // generator | weekly | manage
+  const [activeTab, setActiveTab] = useState('generator') // generator | weekly | shopping | manage
   const [dishes, setDishes] = useState(() => {
     const saved = localStorage.getItem('menuAppDishes')
     if (saved) return JSON.parse(saved)
@@ -151,6 +151,12 @@ function App() {
           1 Tuần
         </button>
         <button 
+          className={`tab-btn ${activeTab === 'shopping' ? 'active' : ''}`}
+          onClick={() => setActiveTab('shopping')}
+        >
+          🛒 Đi Chợ
+        </button>
+        <button 
           className={`tab-btn ${activeTab === 'manage' ? 'active' : ''}`}
           onClick={() => setActiveTab('manage')}
         >
@@ -256,6 +262,11 @@ function App() {
         </div>
       )}
 
+      {/* ===== TAB DI CHO ===== */}
+      {activeTab === 'shopping' && (
+        <ShoppingList weeklyMenu={weeklyMenu} />
+      )}
+
       {/* ===== TAB QUAN LY ===== */}
       {activeTab === 'manage' && (
         <DishManager dishes={dishes} setDishes={setDishes} />
@@ -335,6 +346,142 @@ function DishManager({ dishes, setDishes }) {
       <button className="btn btn-secondary" onClick={resetToDefault} style={{marginTop: '15px'}}>
         ♻️ Khôi phục danh sách gốc
       </button>
+    </div>
+  )
+}
+
+function ShoppingList({ weeklyMenu }) {
+  const [checked, setChecked] = useState({})
+
+  // Collect all dishes from weekly menu
+  const allDishes = []
+  weeklyMenu.forEach(day => {
+    if (day.trua.MAN) allDishes.push(day.trua.MAN)
+    if (day.trua.CANH) allDishes.push(day.trua.CANH)
+    if (day.trua.RAU) allDishes.push(day.trua.RAU)
+    if (day.chieu.MAN) allDishes.push(day.chieu.MAN)
+    if (day.chieu.NUOC) allDishes.push(day.chieu.NUOC)
+  })
+
+  // Aggregate ingredients, count occurrences
+  const ingredientMap = {}
+  allDishes.forEach(dish => {
+    if (dish.ingredients) {
+      dish.ingredients.forEach(ing => {
+        const key = ing.toLowerCase().trim()
+        if (!ingredientMap[key]) {
+          ingredientMap[key] = { name: ing, count: 0, dishes: [] }
+        }
+        ingredientMap[key].count++
+        if (!ingredientMap[key].dishes.includes(dish.name)) {
+          ingredientMap[key].dishes.push(dish.name)
+        }
+      })
+    }
+  })
+
+  // Group by category
+  const categories = {
+    '🥩 Thịt & Cá & Hải sản': [
+      'thịt', 'bò', 'heo', 'gà', 'vịt', 'ếch', 'cá', 'mực', 'tôm', 'lươn',
+      'sườn', 'giò', 'chân gà', 'cánh gà', 'đùi gà', 'xương', 'bò viên'
+    ],
+    '🥬 Rau & Củ & Trái': [
+      'rau', 'cải', 'bông cải', 'mướp', 'bí', 'khổ qua', 'cà ', 'khoai',
+      'cà rốt', 'hành tây', 'ớt chuông', 'đậu que', 'dưa leo', 'giá',
+      'bạc hà', 'thơm', 'đu đủ', 'bắp ngô', 'xà lách', 'đậu bắp',
+      'củ cải', 'chanh'
+    ],
+    '🧄 Gia vị & Nước chấm': [
+      'tỏi', 'tiêu', 'sả', 'gừng', 'ớt', 'nghệ', 'quế', 'hoa hồi',
+      'ngũ vị', 'cà ri', 'mật ong', 'đường', 'nước mắm', 'dầu hào',
+      'dầu ăn', 'bơ', 'giấm', 'me', 'tương', 'nước dừa', 'nước cốt dừa',
+      'phô mai', 'hành tím', 'hành lá', 'hành phi', 'rau mùi', 'rau om',
+      'rau răm', 'rau ngò', 'cần tây', 'mỡ hành', 'nước mắm chua ngọt'
+    ],
+    '🍜 Đồ khô & Khác': [
+      'bún', 'hủ tíu', 'mì', 'nui', 'bánh', 'miến', 'gạo',
+      'trứng', 'đậu hủ', 'đậu phộng', 'nấm', 'tôm khô', 'táo đỏ',
+      'kỷ tử', 'bột', 'vỏ hoành', 'đồ chua', 'spaghetti', 'rau sống'
+    ]
+  }
+
+  const categorize = (name) => {
+    const lower = name.toLowerCase()
+    for (const [cat, keywords] of Object.entries(categories)) {
+      if (keywords.some(kw => lower.includes(kw))) return cat
+    }
+    return '📦 Khác'
+  }
+
+  // Build grouped list
+  const grouped = {}
+  Object.values(ingredientMap).forEach(item => {
+    const cat = categorize(item.name)
+    if (!grouped[cat]) grouped[cat] = []
+    grouped[cat].push(item)
+  })
+
+  // Sort each group alphabetically
+  Object.values(grouped).forEach(arr => arr.sort((a, b) => a.name.localeCompare(b.name, 'vi')))
+
+  const toggle = (name) => {
+    setChecked(prev => ({ ...prev, [name]: !prev[name] }))
+  }
+
+  const clearAll = () => setChecked({})
+
+  const totalItems = Object.keys(ingredientMap).length
+  const checkedCount = Object.values(checked).filter(Boolean).length
+
+  if (weeklyMenu.length === 0) {
+    return (
+      <div className="glass-card">
+        <h2 style={{marginTop: 0, textAlign: 'center'}}>🛒 Danh sách đi chợ</h2>
+        <p style={{textAlign: 'center', color: '#999'}}>Hãy tạo thực đơn tuần trước nhé!</p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="glass-card">
+      <div className="shopping-header">
+        <h2 style={{marginTop: 0}}>🛒 Danh sách đi chợ</h2>
+        <span className="shopping-progress">
+          {checkedCount}/{totalItems} ✓
+        </span>
+      </div>
+      <p style={{color: '#999', fontSize: '13px', marginTop: 0}}>
+        Tổng hợp từ thực đơn tuần ({allDishes.length} món)
+      </p>
+
+      {checkedCount > 0 && (
+        <button className="btn btn-secondary" onClick={clearAll} style={{marginBottom: '15px', padding: '8px 16px', fontSize: '13px'}}>
+          Bỏ tất cả dấu ✓
+        </button>
+      )}
+
+      {Object.entries(grouped).map(([cat, items]) => (
+        <div key={cat} className="shop-group">
+          <div className="shop-group-title">{cat}</div>
+          {items.map(item => (
+            <label
+              key={item.name}
+              className={`shop-item ${checked[item.name] ? 'shop-checked' : ''}`}
+            >
+              <input
+                type="checkbox"
+                checked={!!checked[item.name]}
+                onChange={() => toggle(item.name)}
+              />
+              <span className="shop-name">{item.name}</span>
+              {item.count > 1 && (
+                <span className="shop-count">×{item.count} món</span>
+              )}
+            </label>
+          ))}
+        </div>
+      ))}
     </div>
   )
 }

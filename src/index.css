@@ -328,3 +328,78 @@ header h1 {
   border-radius: 8px;
   font-family: inherit;
 }
+
+/* ===== Shopping List Tab ===== */
+.shopping-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.shopping-progress {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+  background: #fff3e0;
+  padding: 4px 12px;
+  border-radius: 12px;
+}
+
+.shop-group {
+  margin-bottom: 16px;
+}
+
+.shop-group-title {
+  font-weight: 700;
+  font-size: 15px;
+  padding: 8px 0 6px;
+  border-bottom: 2px solid #f0ebe4;
+  margin-bottom: 6px;
+}
+
+.shop-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-bottom: 1px solid #f8f8f8;
+}
+
+.shop-item:hover {
+  background: #faf7f2;
+}
+
+.shop-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.shop-name {
+  flex-grow: 1;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.shop-checked .shop-name {
+  text-decoration: line-through;
+  color: #bbb;
+}
+
+.shop-checked {
+  opacity: 0.6;
+}
+
+.shop-count {
+  font-size: 11px;
+  color: #999;
+  background: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
