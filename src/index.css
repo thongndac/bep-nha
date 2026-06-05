@@ -1,0 +1,330 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+:root {
+  --bg-color: #fcf8f2;
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --primary: #f28c28;
+  --primary-hover: #e07b22;
+  --text: #333;
+  --border: rgba(255,255,255,0.5);
+  --shadow: 0 8px 32px rgba(0,0,0,0.05);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+header h1 {
+  color: var(--primary);
+  margin-bottom: 5px;
+}
+
+/* ===== Tabs ===== */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab-btn {
+  background: transparent;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.tab-btn.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* ===== Glass Card ===== */
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.card-nuoc {
+  background: linear-gradient(135deg, rgba(255,249,240,0.8), rgba(255,243,224,0.8));
+  border-color: #ffe0b2;
+}
+
+/* ===== Buttons ===== */
+.btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  width: 100%;
+  transition: background 0.3s;
+  box-shadow: 0 4px 6px rgba(242, 140, 40, 0.3);
+}
+
+.btn:hover {
+  background: var(--primary-hover);
+}
+
+.btn-secondary {
+  background: #fff;
+  color: var(--text);
+  border: 1px solid #ddd;
+  box-shadow: none;
+}
+
+.btn-secondary:hover {
+  background: #f0f0f0;
+}
+
+/* ===== Bua Title & Chieu Header ===== */
+.bua-title {
+  margin-top: 0;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.chieu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.chieu-header .bua-title {
+  margin-bottom: 0;
+}
+
+.mode-switch {
+  border: 1px solid #ddd;
+  background: #fff;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.mode-switch:hover {
+  background: #f5f5f5;
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* ===== Meal Items ===== */
+.meal-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  background: #fff;
+  padding: 14px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+.meal-item:last-child {
+  margin-bottom: 0;
+}
+
+.meal-item.nuoc-highlight {
+  background: linear-gradient(135deg, #fff9f0, #fff3e0);
+  border: 1px solid #ffe0b2;
+}
+
+.meal-type {
+  font-size: 11px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 8px;
+  margin-right: 12px;
+  min-width: 55px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.type-MAN { background: #ffebee; color: #c62828; }
+.type-CANH { background: #e3f2fd; color: #1565c0; }
+.type-RAU { background: #e8f5e9; color: #2e7d32; }
+.type-NUOC { background: #fff3e0; color: #e65100; }
+
+.meal-name {
+  flex-grow: 1;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.refresh-btn {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  opacity: 0.4;
+  transition: opacity 0.3s;
+  padding: 4px;
+}
+
+.refresh-btn:hover {
+  opacity: 1;
+}
+
+/* ===== Weekly Menu ===== */
+.weekly-scroll {
+  max-height: 480px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.weekly-day {
+  margin-bottom: 12px;
+  padding: 12px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 12px;
+  transition: transform 0.2s;
+}
+
+.weekly-day:hover {
+  transform: translateX(3px);
+}
+
+.weekly-has-nuoc {
+  background: linear-gradient(135deg, rgba(255,249,240,0.6), rgba(255,243,224,0.6));
+  border: 1px solid #ffe0b2;
+}
+
+.weekly-day-title {
+  margin: 0 0 8px 0;
+  color: var(--primary);
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #eee;
+}
+
+.nuoc-badge {
+  font-size: 10px;
+  font-weight: 600;
+  background: #fff3e0;
+  color: #e65100;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid #ffe0b2;
+}
+
+.weekly-bua {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+  font-size: 13px;
+}
+
+.weekly-bua-label {
+  font-weight: 600;
+  color: #999;
+  font-size: 12px;
+  min-width: 38px;
+}
+
+.weekly-dish {
+  color: #444;
+}
+
+.weekly-sep {
+  color: #ddd;
+}
+
+.nuoc-text {
+  color: #e65100;
+  font-weight: 500;
+}
+
+/* ===== Manage Tab ===== */
+.dish-list {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-top: 15px;
+}
+
+.dish-group-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #eee;
+}
+
+.dish-group-count {
+  font-size: 12px;
+  color: #999;
+}
+
+.dish-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  border-bottom: 1px solid #f5f5f5;
+  font-size: 14px;
+}
+
+.dish-row:hover {
+  background: #fafafa;
+}
+
+.add-dish-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.add-dish-form input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: inherit;
+}
+
+.add-dish-form select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-family: inherit;
+}
